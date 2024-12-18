@@ -3,12 +3,17 @@ from flask_cors import CORS
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Resource Sharing for frontend-backend communication
 
-# MongoDB connection
-client = MongoClient("mongodb://localhost:27017/")
+# MongoDB connection using URI from environment variable
+mongo_uri = os.getenv("MONGO_URI")  # Get MONGO_URI from .env file
+client = MongoClient(mongo_uri)
 db = client["task_manager_db"]
 tasks_collection = db["tasks"]
 
