@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -20,7 +20,7 @@ tasks_collection = db["tasks"]
 # Home Route (render HTML template)
 @app.route("/", methods=["GET"])
 def home():
-    return "Task Manager API"
+    return render_template("index.html")
 
 # Add a new task
 @app.route("/add_task", methods=["POST"])
