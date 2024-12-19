@@ -4,7 +4,7 @@ const addTaskButton = document.getElementById("add-task");
 const taskList = document.getElementById("task-list");
 
 // Backend API URL
-const BASE_URL = "https://task-manager-nwhi.onrender.com";  // Update this with your deployed backend URL
+const BASE_URL = "http://127.0.0.1:5000";  // Update this with your deployed backend URL
 
 // Function to Fetch All Tasks from the Backend
 async function fetchTasks() {
