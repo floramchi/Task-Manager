@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Enable Cross-Origin Resource Sharing for frontend-backend communication
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins for cross-origin requests
 
 # MongoDB connection using URI from environment variable
 mongo_uri = os.getenv("MONGO_URI")  # Get MONGO_URI from .env file
@@ -20,7 +20,7 @@ tasks_collection = db["tasks"]
 # Home Route (render HTML template)
 @app.route("/", methods=["GET"])
 def home():
-    return render_template("index.html")
+    return "Task Manager API"
 
 # Add a new task
 @app.route("/add_task", methods=["POST"])
@@ -54,4 +54,6 @@ def delete_task(id):
     return jsonify({"message": "Task deleted"}), 200
 
 if __name__ == "__main__":
-     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    # Use dynamic port provided by Render or default to 5000
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
